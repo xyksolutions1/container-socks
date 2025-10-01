@@ -1,0 +1,22 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+prepare_service
+SERVICE_NAME="socks"
+
+check_container_initialized
+check_service_initialized init
+liftoff
+
+if [ -f "${CONFIG_PATH}/${CONFIG_USER_FILE}" ] && grep -q ':' "${CONFIG_PATH}/${CONFIG_USER_FILE}"; then
+    users_arg="--users ${CONFIG_PATH}/${CONFIG_USER_FILE}"
+fi
+
+print_start "Starting Socks"
+exec sudo -u "${SOCKS_USER}" \
+                /usr/local/bin/go-socks5-proxy \
+                                                --host "${LISTEN_IP}" \
+                                                --port "${LISTEN_PORT}" ${users_arg} ${SOCKS_ADDITIONAL_ARGS}

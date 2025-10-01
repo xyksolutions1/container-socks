@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+socks_bootstrap_filesystem() {
+    create_folder \
+            "${CONFIG_PATH}" \
+                "${SOCKS_USER}":"${SOCKS_GROUP}" 750
+}
+
+socks_configure_users() {
+    set -o posix ; set | grep '^SOCKS_USER_.*_PASS' | while IFS='=' read -r variable value; do
+        name=$(echo "${variable}" | sed -e "s|^SOCKS_USER_||" -e "s|_PASS.*||")
+        transform_var file SOCKS_USER_${name}_PASS
+        username=${name,,}
+        password="${value}"
+        #htpasswd_entry=$(htpasswd -b -n "${username}" "${password}")
+        htpasswd_entry=${username}:${password}
+        user_file="${CONFIG_PATH}/${CONFIG_USER_FILE}"
+        if grep -q "^${username}:" "${user_file}" 2>/dev/null; then
+            sed -i "/^${username}:/d" "${user_file}"
+            echo "$htpasswd_entry" | silent tee -a "${user_file}"
+            print_debug "[socks_configure_users] Updated password for user: ${username}"
+        else
+            echo "$htpasswd_entry" | silent tee -a "${user_file}"
+            print_debug "[socks_configure_users] Added new user: ${username}"
+        fi
+    done
+}

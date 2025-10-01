@@ -10,11 +10,11 @@ This repository will build a container for a Socks5 Proxy.
 
 - [Nfrastack](https://www.nfrastack.com)
 
+
 ## Table of Contents
 
 - [About](#about)
 - [Maintainer](#maintainer)
-- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
   - [Prebuilt Images](#prebuilt-images)
   - [Quick Start](#quick-start)
@@ -23,15 +23,10 @@ This repository will build a container for a Socks5 Proxy.
   - [Environment Variables](#environment-variables)
     - [Base Images used](#base-images-used)
     - [Core Configuration](#core-configuration)
-    - [Virus Definitions Configuration](#virus-definitions-configuration)
-    - [Virus Scanning Settings](#virus-scanning-settings)
-    - [Scanning Limits](#scanning-limits)
-    - [Alerting Settings](#alerting-settings)
   - [Users and Groups](#users-and-groups)
   - [Networking](#networking)
 - [Maintenance](#maintenance)
   - [Shell Access](#shell-access)
-  - [Manual Definition Updates](#manual-definition-updates)
 - [Support & Maintenance](#support--maintenance)
 - [License](#license)
 
@@ -81,9 +76,9 @@ Images are built for `amd64` by default, with optional support for `arm64` and o
 
 The following directories are used for configuration and can be mapped for persistent storage.
 
-| Directory | Description                                    |
-| --------- | ---------------------------------------------- |
-| `/config` | (optional) Configuration Files                 |
+| Directory | Description                    |
+| --------- | ------------------------------ |
+| `/config` | (optional) Configuration Files |
 
 ### Environment Variables
 
@@ -102,15 +97,15 @@ Below is the complete list of available options that can be used to customize yo
 
 #### Core Configuration
 
-| Parameter            | Description                                                            | Default               | `_FILE` |
-| -------------------- | ---------------------------------------------------------------------- | --------------------- | -------- |
-| `SOCKS_USER` | What username to run as | `socks` | |
-| `LISTEN_IP` | Bind to which IP inside the container | `0.0.0.0` | |
-| `LISTEN_PORT` | Bind to which port inside the container | `1080` | |
-| `CONFIG_PATH`        | Folder for Config Files                                                | `/config/`            |          |
-| `CONFIG_USER_FILE`        | User configuration file                                             | `socks.user`        |          |
-| `CUSTOM_CONFIG_PATH` | Additional User provided configuration path                            | `${DATA_PATH}/conf.d` |          |
-| `SOCKS_USER_NAME_PASS` | Password for the `NAME` user | | x |
+| Parameter              | Description                                 | Default               | `_FILE` |
+| ---------------------- | ------------------------------------------- | --------------------- | ------- |
+| `SOCKS_USER`           | What username to run as                     | `socks`               |         |
+| `LISTEN_IP`            | Bind to which IP inside the container       | `0.0.0.0`             |         |
+| `LISTEN_PORT`          | Bind to which port inside the container     | `1080`                |         |
+| `CONFIG_PATH`          | Folder for Config Files                     | `/config/`            |         |
+| `CONFIG_USER_FILE`     | User configuration file                     | `socks.user`          |         |
+| `CUSTOM_CONFIG_PATH`   | Additional User provided configuration path | `${DATA_PATH}/conf.d` |         |
+| `SOCKS_USER_NAME_PASS` | Password for the `NAME` user                |                       | x       |
 
 >> You can add multiple users, just make more environment variables replacing `NAME` with the `USERNAME`
 >> Each variable will create a new lowercase username with the password you have made
@@ -118,18 +113,16 @@ Below is the complete list of available options that can be used to customize yo
 
 ## Users and Groups
 
-| Type  | Name      | ID   |
-| ----- | --------- | ---- |
-| User  | `socks` | 5353 |
-| Group | `socks` | 5353 |
+| Type  | Name    | ID   |
+| ----- | ------- | ---- |
+| User  | `socks` | 1080 |
+| Group | `socks` | 1080 |
 
 ### Networking
 
-| Port   | Protocol | Description    |
-| ------ | -------- | -------------- |
-| `53`   | tcp      | socks Daemon |
-| `53`   | udp      | socks Daemon |
-| `8953` | udp      | Remote Control |
+| Port   | Protocol | Description  |
+| ------ | -------- | ------------ |
+| `1080` | tcp      | Socks Daemon |
 
 * * *
 
@@ -139,9 +132,6 @@ Below is the complete list of available options that can be used to customize yo
 
 For debugging and maintenance, `bash` and `sh` are available in the container.
 
-### Manual Definition Updates
-
-Manual Definition Updates can be performed by entering the container and typing `update-now`
 
 ## Support & Maintenance
 

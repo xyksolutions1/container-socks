@@ -1,0 +1,20 @@
+services:
+  socks-app:
+    image: docker.io/nfrastack/socks:latest
+    container_name: socks-app
+    ports:
+      - 1080:1080
+    #volumes:
+      #- ./config:/config
+    environment:
+      - TIMEZONE=America/Vancouver
+
+      - SOCKS_USER_EXAMPLE_PASS=changeme
+    networks:
+      - services
+    restart: always
+
+networks:
+  services:
+    external: true
+

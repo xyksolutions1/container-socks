@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+LISTEN_IP=${LISTEN_IP:-"0.0.0.0"}
+LISTEN_PORT=${LISTEN_PORT:-"1080"}
+CONFIG_PATH=${CONFIG_PATH:-"/config/"}
+CONFIG_USER_FILE=${CONFIG_USER_FILE:-"socks.users"}
+SOCKS_USER=${SOCKS_USER:-"socks"}
+SOCKS_GROUP=${SOCKS_GROUP:-"socks"}
