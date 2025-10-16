@@ -34,7 +34,6 @@ COPY README.md /usr/src/container/README.md
 RUN echo "" && \
     export SOCKS_BUILD_DEPS_ALPINE="  \
                                     build-base \
-                                    go \
                                    " \
                                  && \
     export SOCKS_BUILD_DEPS_DEBIAN="  \
@@ -53,6 +52,7 @@ RUN echo "" && \
                     SOCKS_BUILD_DEPS \
                     SOCKS_RUN_DEPS \
                     && \
+    package build go && \
     clone_git_repo "${SOCKS_REPO_URL}" "${SOCKS_VERSION}" && \
     go build \
                 -ldflags " \
